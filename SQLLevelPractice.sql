@@ -263,3 +263,112 @@ FROM Triangles
 
 
 -- Ver "SQLLevelPractice.docx" 'SQL29'
+SELECT 
+    MAX(salary * months) AS MaxSalary,
+    SUM(CASE WHEN (salary * months) = (SELECT MAX(salary * months) FROM Employee) THEN 1 ELSE 0 END) AS EmployeeCount
+FROM Employee;
+
+
+SELECT
+    MAX(salary * months) AS MaxSalary,
+    COUNT(*) AS CountMaxSalary
+FROM Employee
+WHERE (salary * months) = (SELECT MAX(salary * months) FROM Employee);
+
+
+-- Ver "SQLLevelPractice.docx" 'SQL30'
+SELECT
+    ROUND(SUM(LAT_N),2),
+    ROUND(SUM(LONG_W),2)
+FROM Station
+
+
+-- Ver "SQLLevelPractice.docx" 'SQL31'
+
+SELECT
+    ROUND(SUM(LAT_N),4)
+FROM Station
+WHERE LAT_N BETWEEN 38.7880 AND 137.2345
+
+
+-- Ver "SQLLevelPractice.docx" 'SQL32'
+
+SELECT
+    ROUND(MAX(LAT_N),4)
+FROM Station
+WHERE LAT_N < 137.2345
+
+
+-- Ver "SQLLevelPractice.docx" 'SQL33'
+
+SELECT
+    ROUND(LONG_W,4)
+FROM Station
+WHERE LAT_N = (SELECT MAX(LAT_N) FROM Station WHERE LAT_N < 137.2345)
+
+
+-- Ver "SQLLevelPractice.docx" 'SQL34'
+
+SELECT
+    ROUND(MIN(LAT_N),4)
+FROM Station
+WHERE LAT_N > 38.7780
+
+
+-- Ver "SQLLevelPractice.docx" 'SQL35'
+
+SELECT
+    ROUND(LONG_W,4)
+FROM Station
+WHERE LAT_N = (SELECT MIN(LAT_N) FROM Station WHERE LAT_N > 38.7780)
+
+
+-- Ver "SQLLevelPractice.docx" 'SQL36'
+
+SELECT
+    SUM(City.Population)
+FROM City
+INNER JOIN Country
+ON City.Countrycode = Country.Code
+WHERE Country.Continent = 'Asia'
+
+
+-- Ver "SQLLevelPractice.docx" 'SQL37'
+
+
+SELECT
+    City.Name
+FROM City
+INNER JOIN Country
+ON City.CountryCode = Country.Code
+WHERE Country.Continent = 'Africa'
+
+
+-- Ver "SQLLevelPractice.docx" 'SQL38'
+
+
+SELECT
+    Country.Continent,
+    FLOOR(AVG(City.Population))
+FROM Country
+JOIN City
+ON Country.Code = City.CountryCode
+GROUP BY Country.Continent
+
+
+-- Ver "SQLLevelPractice.docx" 'SQL39'
+
+
+SELECT
+    CONCAT(Name,'(',SUBSTRING(Occupation,1,1),')')
+FROM Occupations
+ORDER BY Name;
+
+SELECT
+    CONCAT("There are a total of ",COUNT(Occupation)," ", LOWER(Occupation),"s.")
+FROM Occupations
+GROUP BY Occupation
+ORDER BY COUNT(Occupation), Occupation
+
+
+-- Ver "SQLLevelPractice.docx" 'SQL40'
